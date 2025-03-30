@@ -6,7 +6,7 @@ import time
 os.system("clear")
 print("\033[1;36m Author   : DARK TECH \033[1;36m")
 time.sleep(2)
-print("snapchat : flaah999")
+print("author : DARKTECH")
 time.sleep(1)
 print("Twitter  : 0xfff0800")
 time.sleep(1)
