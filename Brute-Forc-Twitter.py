@@ -46,8 +46,8 @@ b.addheaders = [('User-agent',
                  'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/45.0.2454101'
                  )]
 
-username = input('\033[1;37muser : \033[1;37m')
-passwordList = input('\033[1;37mpassword : \033[1;37m')
+username = input('\033[1;DARKTECH : \033[1;37m')
+passwordList = input('\033[1; PASSWORD45 : \033[1;37m')
 proxyList = input('\033[1;37mproxy : \033[1;37m')
 def proxy():
     logging.basicConfig()
