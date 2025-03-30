@@ -5,14 +5,12 @@
 ### Usage:
 ```
 git clone https://github.com/Jaydendev112/Tweeter-py-hack
-pip3 install mechanize
-pip3 install proxylist
-pip3 install argparse
-cd Brute-Forc-Twitter
-chmod +x Brute-Forc-Twitter.py
-python3 Brute-Forc-Twitter.py
+cd hack-Twitter
+chmod +x hack-Twitter.py
+chmod +x user-email.py
 
+python3 hack-Twitter.py
 
-
+python3 user-email.py
 
 ```
